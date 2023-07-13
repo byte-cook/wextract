@@ -8,9 +8,9 @@ A CLI program to read a html/xml stream from stdin, extracts text and prints it 
 sudo apt install python3.6 python3-pip
 ```
 
-1. Download ZIP of this repository and extract its content.
+2. Download ZIP of this repository and extract its content.
 
-1. Install dependencies:
+3. Install dependencies:
 ```
 pip install lxml
 ```
