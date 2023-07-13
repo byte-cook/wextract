@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -8,7 +8,7 @@ import textwrap
 from bs4 import BeautifulSoup
 
 # https://lxml.de/installation.html
-# pip install lxml
+# pip3 install lxml
 
 HELP_APP = '''\
             Reads a html/xml stream from stdin, extracts text and prints it to stdout.

@@ -12,11 +12,11 @@ sudo apt install python3.6 python3-pip
 
 3. Install dependencies:
 ```
-pip install lxml
+pip3 install lxml
 ```
 or
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage examples
