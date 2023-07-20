@@ -20,15 +20,26 @@ HELP_APP = '''\
             See for more information: https://www.w3schools.com/cssref/css_selectors.php
             
             Examples:
-                cat file.html | wextract.py -s html "" text
-                    Print all texts of a html file.
+            
+            > cat file.html | wextract.py -s html \* text
+            Print all texts of a html file (escape asterisk to avoid expansion by bash).
+                -s html                : select html as the root element, all sub elements are run through
+                \* text                : print the text of all found element
+
+            > cat file.html | wextract.py -s "table tr:not(:first-child)" td text - ": " "td:nth-child(2)" text 
+            > cat file.html | wextract.py -l td -s "table tr" td text - ": " "td:nth-child(2)" text 
+            Make a simple list from a html table without first header row.
+                -l td                  : skip line if text is empty
+                -s "table tr"          : select <tr> as root element, all sub elements are run through
+                td text                : print text of td element if available
+                - ": "                 : print colon
+                "td:nth-child(2)" text : print text of the second child
                 
-                cat file.html | wextract.py -s "table tr:not(:first-child)" td text - ": " "td:nth-child(2)" text 
-                cat file.html | wextract.py -l td -s "table tr" td text - ": " "td:nth-child(2)" text 
-                    Make a simple list from a html table without first header row.
+            > cat file.html | wextract.py -B "[" -A "]" -L "," -s "table tr" - "{ \"name\": \"" td text - "\" }" 
+            Create a JSON text from a html table.
+                -B "["                 : print square bracket in the beginning
+                -A "]"                 : print square bracket in the end
                 
-                cat file.html | wextract.py -B "[" -A "]" -L "," -s "table tr" - "{ \"name\": \"" td text - "\" }" 
-                    Create a JSON text from a html table.
             '''
 HELP_OUTPUTDEF = '''\
             Defines the output format. 
@@ -36,30 +47,37 @@ HELP_OUTPUTDEF = '''\
             Otherwise, the complete stream is used resulting in a single-line output.
             
             Format: 
-                SELECTOR USAGE [SELECTOR USAGE]*
-                SELECTOR: <CSS-selector>|-
-                    Selects a single element only, can be "-" for constant strings
-                USAGE: text|<attribute name>|<string>
-                    Prints the text of an element, the attribute of an element or a constant string
+            
+            SELECTOR USAGE [SELECTOR USAGE ...]
+            whereby:
+            SELECTOR: <CSS-selector>|*|-
+                <CSS-selector>   : select a single element
+                *                : use the current tag (escape asterisk to avoid expansion by bash: \*)
+                -                : print constant strings (no CSS selector in use)
+            USAGE: text|<attribute name>|<string>
+                text             : print the text of an element
+                <attribute name> : print the attribute of an element
+                <string>         : print a constant string
                 
             Examples:
-                "div a" text     Print the text of an anchor element inside a div element. 
-                a href           Print the target url of an anchor element.
-                - INFO           Print the string "INFO".
+            
+            "div a" text         : print the text of an anchor element inside a div element
+            a href               : print the target url of an anchor element
+            - INFO               : print the string "INFO"
             '''
 
 EMPTY_SELECTOR = '-'
-
+ALL_SELECTOR = '*'
 
 def _create_output(rootTag, selector, usage, replace):
     tag = None
     if selector == EMPTY_SELECTOR:
         pass
-    elif selector == '':
+    elif selector == ALL_SELECTOR:
         tag = rootTag
     else:
         tag = rootTag.select_one(selector)
-    
+
     match usage:
         case 'text':
             if tag:
