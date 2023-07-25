@@ -1,4 +1,4 @@
-# wextract.py
+# Wextract.py
 
 A CLI program to read a html/xml stream from stdin, extracts text and prints it to stdout.
 
@@ -7,15 +7,20 @@ A CLI program to read a html/xml stream from stdin, extracts text and prints it 
 ```
 sudo apt install python3.6 python3-pip
 ```
-2. Download ZIP of this repository and extract its content.
 
-3. Install dependencies:
+2. Install dependencies:
 ```
 pip3 install lxml
 ```
 or
 ```
 pip3 install -r requirements.txt
+```
+
+3. Download Wextract.py and set execute permissions:
+```
+curl -LJO https://github.com/byte-cook/wextract/raw/main/wextract.py
+chmod +x wextract.py
 ```
 
 ## Usage examples
