@@ -19,7 +19,7 @@ pip3 install -r requirements.txt
 
 3. Download Wextract.py and set execute permissions:
 ```
-curl -LJO https://github.com/byte-cook/wextract/raw/main/wextract.py
+curl -LJO https://raw.githubusercontent.com/byte-cook/wextract/main/wextract.py
 chmod +x wextract.py
 ```
 
