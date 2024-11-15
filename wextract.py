@@ -8,7 +8,7 @@ import textwrap
 from bs4 import BeautifulSoup
 
 # https://lxml.de/installation.html
-# pip3 install lxml
+# pip3 install lxml bs4
 
 HELP_APP = '''\
             Reads a html/xml stream from stdin, extracts text and prints it to stdout.
@@ -85,7 +85,7 @@ def _create_output(rootTag, selector, usage, replace):
                 output = tag.text
                 if replace:
                     output = output.replace(replace[0], replace[1])
-                return output
+                return output.strip()
             else:
                 logging.debug('The CSS selector "{}" returns no result for: \n{}'.format(selector, rootTag))
                 return None
